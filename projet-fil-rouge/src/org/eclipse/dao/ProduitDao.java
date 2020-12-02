@@ -18,12 +18,13 @@ import org.eclipse.model.Utilisateur;
 			Connection c = MyConnection.getConnection();
 			if(c != null) {
 				try {
-					PreparedStatement ps = c.prepareStatement("INSERT INTO Produit (nom, description, imageUrl, prixUnitaire, quantiteEnStock) values (?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-					ps.setString(1, produit.getNom());
-					ps.setString(2,produit.getDescription());
-					ps.setString(3,produit.getImageUrl());
-					ps.setFloat(4,produit.getPrixUnitaire());
-					ps.setInt(5,produit.getQuantiteEnStock());
+					PreparedStatement ps = c.prepareStatement("INSERT INTO Produit (id,nom, description, imageUrl, prixUnitaire, quantiteEnStock) values (?,?,?,?,?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+					ps.setInt(1, produit.getIdProduit());
+					ps.setString(2, produit.getNom());
+					ps.setString(3,produit.getDescription());
+					ps.setString(4,produit.getImageUrl());
+					ps.setFloat(5,produit.getPrixUnitaire());
+					ps.setInt(6,produit.getQuantiteEnStock());
 					ps.executeUpdate();
 					ResultSet resultat = ps.getGeneratedKeys();
 					if (resultat.next()) {
@@ -109,12 +110,12 @@ import org.eclipse.model.Utilisateur;
 					ResultSet result = ps.executeQuery();
 					if (result.next()) {
 						int a = result.getInt(1);
-						String n = result.getString(2);
+						String nom2 = result.getString(2);
 						String description = result.getString(3);
 						String imageUrl = result.getString(4);
 						float prixUnitaire = result.getFloat(5);
 						int quantiteEnStock = result.getInt(6);
-						Produit produit = new Produit(a, n, description, imageUrl, prixUnitaire, quantiteEnStock );
+						Produit produit = new Produit(a, nom2, description, imageUrl, prixUnitaire, quantiteEnStock );
 						return produit;
 					}
 				} catch (Exception e) {
@@ -135,12 +136,12 @@ import org.eclipse.model.Utilisateur;
 				ResultSet result = ps.executeQuery();
 				while (result.next()) {
 					int a = result.getInt(1);
-					String n = result.getString(2);
+					String nom2 = result.getString(2);
 					String description = result.getString(3);
 					String imageUrl = result.getString(4);
 					float prixUnitaire = result.getFloat(5);
 					int quantiteEnStock = result.getInt(6);
-					Produit produit = new Produit(a, n, description, imageUrl, prixUnitaire, quantiteEnStock );
+					Produit produit = new Produit(a, nom2, description, imageUrl, prixUnitaire, quantiteEnStock );
 					produits.add(produit);
 				}
 			}

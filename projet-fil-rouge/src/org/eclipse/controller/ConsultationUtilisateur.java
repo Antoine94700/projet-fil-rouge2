@@ -18,7 +18,7 @@ public class ConsultationUtilisateur extends HttpServlet {
     protected void duGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
     	request.setAttribute("participePasse", "consulter");
-    	request.setAttribute("utilisateurs, utilisateurService".findAll());
+    	request.setAttribute("utilisateurs", utilisateurService.findAll());
     	this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/confirmation.jsp").forward(request, response);
     }
 }

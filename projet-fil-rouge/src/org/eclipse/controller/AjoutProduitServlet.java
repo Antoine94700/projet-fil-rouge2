@@ -1,50 +1,36 @@
 package org.eclipse.controller;
 
+import org.eclipse.model.Produit;
+import org.eclipse.service.ProduitService;
+
 import java.io.IOException;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.model.Produit;
-import org.eclipse.service.ProduitService;
-import org.eclipse.dao.ProduitDao;
-import org.eclipse.controller.ProduitServlet;
-
-@WebServlet("/AjoutProduit")
+@WebServlet("/ajoutProduit")
 public class AjoutProduitServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private ProduitService produitService = new ProduitService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher("WEB-INF/produit/ajoutProduit.jsp").forward(request, response);
+		request.setAttribute("produits", produitService.findAll());
+		getServletContext().getRequestDispatcher("/WEB-INF/produit/ajoutProduit.jsp").forward(request, response);
+	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		boolean test = true;
-
-		String nom = request.getParameter("nomSaisi");
-		String description = request.getParameter("descriptionSaisie");
-		String imageUrl = request.getParameter("imageUrlSaisie");
-		float prixUnitaire = request.getParameter("prixUnitaireSaisi");
-		int quantiteEnStock = request.getParameter("quantiteEnStockSaisie");
-
-		if (!test) {
-			request.setAttribute("nomSaisi", nom);
-			request.setAttribute("descriptionSaisie", description);
-			request.setAttribute("imageUrlSaisie", imageUrl);
-			request.setAttribute("prixUnitaireSaisi", prixUnitaire);
-			request.setAttribute("quantiteEnStockSaisie", quantiteEnStock);
-			this.getServletContext().getRequestDispatcher("WEB-INF/utilisateur/ajoutProduit.jsp").forward(request,
-					response);
-		} else {
-			Produit produit = new Produit(, nom, description, imageUrl, prixUnitaire, quantiteEnStock);
-			request.setAttribute("produit", produit);
-			produitService.save(produit);
-			request.setAttribute("utilisateurs", ProduitService.findAll());
-			request.setAttribute("participePasse", "ajoute");
-			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/confirmation.jsp").forward(request,
-					response);
-		}}}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		String nom = request.getParameter("nom");
+		String description = request.getParameter("description");
+		String imageUrl = request.getParameter("imageUrl");
+		float prixUnitaire = Float.parseFloat(request.getParameter("prixUnitaire"));
+		int quantiteEnStock = Integer.parseInt(request.getParameter("quantiteEnStock"));
+		Produit produit = new Produit(id, nom, description, imageUrl, prixUnitaire, quantiteEnStock);
+		produitService.save(produit);
+		doGet(request, response);
+		
+	}
+}

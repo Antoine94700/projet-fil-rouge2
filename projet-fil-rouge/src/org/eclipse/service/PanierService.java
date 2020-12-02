@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.eclipse.model.Panier;
 
+// 
 public class PanierService {
+	// liste des paniers des utilisateurs
 	private List<Panier> paniers;
 
 	public PanierService() {

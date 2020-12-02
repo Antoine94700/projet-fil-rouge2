@@ -4,10 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Ajout Utilisateur</title>
+<title>Ajout Produit</title>
 </head>
 <body>
-	<form action="ajoutUtilisateur" method="post">
+	<form action="produit" method="post">
+	<div>
+			<label for="id">Id : </label> 
+			<input type="text" id="id" name="id" onkeyup="validerId()"> 
+			<span id="validationId"></span>
+		</div>
 		<div>
 			<label for="nom">Nom : </label> 
 			<input type="text" id="nom" name="nom" onkeyup="validerNom()"> 

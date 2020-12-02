@@ -17,7 +17,7 @@ public class UtilisateurServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setAttribute("utilisateurs", utilisateurService.findAll());
+		request.setAttribute("utilisateur", utilisateurService.findAll());
 		getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/utilisateur.jsp").forward(request, response);
 	}
 

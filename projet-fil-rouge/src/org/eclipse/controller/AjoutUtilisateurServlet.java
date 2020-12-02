@@ -10,11 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.model.Utilisateur;
 import org.eclipse.service.UtilisateurService;
 import org.eclipse.dao.UtilisateurDao;
-import org.eclipse.controller.UtilisateurServlet;
 
-@WebServlet("/AjoutUtilisateur")
+@WebServlet("/ajoutUtilisateur")
 public class AjoutUtilisateurServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UtilisateurService utilisateurService = new UtilisateurService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,7 +57,7 @@ public class AjoutUtilisateurServlet extends HttpServlet {
 			Utilisateur utilisateur = new Utilisateur(0, courriel, motDePasse, nom, prenom, type);
 			request.setAttribute("utilisateur", utilisateur);
 			utilisateurService.save(utilisateur);
-			request.setAttribute("utilisateurs", UtilisateurService.findAll());
+			request.setAttribute("utilisateurs", utilisateurService.findAll());
 			request.setAttribute("participePasse", "ajoute");
 			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/confirmation.jsp").forward(request,
 					response);
